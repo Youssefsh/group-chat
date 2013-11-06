@@ -2,7 +2,7 @@
 
 var http = require('http'),
     sockjs = require('sockjs'),
-    warble = sockjs.createServer(),
+    groupChat = sockjs.createServer(),
     express = require('express'),
     connections = [];
     
@@ -12,7 +12,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.listen(3000);
 
-warble.on('connection', function(conn) {
+groupChat.on('connection', function(conn) {
   console.log('Got connection');
   connections.push(conn);
   conn.on('data', function(message) {
@@ -29,5 +29,5 @@ warble.on('connection', function(conn) {
 });
 
 var server = http.createServer();
-warble.installHandlers(server, {prefix:'/warble'});
-server.listen(5555, '0.0.0.0');
+groupChat.installHandlers(server, {prefix:'/groupChat'});
+server.listen(3000, '0.0.0.0');

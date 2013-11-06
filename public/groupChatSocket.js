@@ -1,9 +1,9 @@
 (function() {
   // Initialize the socket & handlers
   var connectToServer = function() {
-    var warbleSocket = new SockJS('http://192.168.1.26:3000/warble');
+    var groupChatSocket = new SockJS('http://192.168.1.26:3000/groupChat');
 
-    warbleSocket.onopen = function() {
+    groupChatSocket.onopen = function() {
       clearInterval(connectRetry);
       $('.connect-status')
         .removeClass('disconnected')
@@ -11,11 +11,11 @@
         .text('Connected');
     };
 
-    warbleSocket.onmessage = function(e) {
+    groupChatSocket.onmessage = function(e) {
       $('#warble-msg').text(e.data);
     };
 
-    warbleSocket.onclose = function() {
+    groupChatSocket.onclose = function() {
       clearInterval(connectRetry);
       connectRetry = setInterval(connectToServer, 1000);
       $('.connect-status')
@@ -26,7 +26,7 @@
 
     // Connect the text field to the socket
     $('.msg-sender').off('input').on('input', function() {
-      warbleSocket.send($('.msg-sender input').val()); 
+      groupChatSocket.send($('.msg-sender input').val()); 
     });
   };
 
