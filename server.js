@@ -30,4 +30,4 @@ groupChat.on('connection', function(conn) {
 
 var server = http.createServer();
 groupChat.installHandlers(server, {prefix:'/groupChat'});
-server.listen(3000, '0.0.0.0');
+server.listen(3001, '0.0.0.0');

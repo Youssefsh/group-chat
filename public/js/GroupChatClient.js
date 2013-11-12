@@ -1,7 +1,7 @@
 (function() {
   // Initialize the socket & handlers
   var connectToServer = function() {
-    var groupChatSocket = new SockJS('http://192.168.1.26:3000/groupChat');
+    var groupChatSocket = new SockJS('http://localhost:3001/groupChat');
 
     groupChatSocket.onopen = function() {
       clearInterval(connectRetry);
@@ -17,7 +17,7 @@
 
     groupChatSocket.onclose = function() {
       clearInterval(connectRetry);
-      connectRetry = setInterval(connectToServer, 1000);
+      connectRetry = setInterval(connectToServer, 3001);
       $('.connect-status')
         .removeClass('connected')
         .addClass('disconnected')
@@ -30,5 +30,5 @@
     });
   };
 
-  var connectRetry = setInterval(connectToServer, 1000);
+  var connectRetry = setInterval(connectToServer, 3001);
 })();
