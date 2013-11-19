@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.get('/submit_nickname', function(req, res) {
+  app.get('/', function(req, res) {
     res.render('login',{title:"Group Chat"});
   });
 
@@ -8,7 +8,8 @@ module.exports = function(app) {
     tmp = {username: req.body.username,connection: 'conn'};
     users.push(tmp);
     console.log("Users: ", users);
-    res.send(200, "Success");
+    //res.send(200, "Success");
+    res.redirect('/list_users');
   });
 
   app.get('/list_users', function(req, res) {
