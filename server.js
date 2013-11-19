@@ -9,8 +9,13 @@ var http = require('http'),
     
 var app = express()
 
+users = [];
+
 //Configure the static assets folder for Express
 app.use(express.static(__dirname + '/public'));
+
+//Use Body Parser
+app.use(express.bodyParser());
 
 //Configure the views folder for Express
 app.set('views', __dirname + '/views');
