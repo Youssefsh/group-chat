@@ -10,6 +10,8 @@ var app = express()
 
 app.use(express.static(__dirname + '/public'));
 
+require('./routes')(app);
+
 app.listen(3000);
 
 groupChat.on('connection', function(conn) {
