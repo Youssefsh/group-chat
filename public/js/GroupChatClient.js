@@ -1,34 +1,23 @@
 (function() {
-  // Initialize the socket & handlers
-  var connectToServer = function() {
-    var groupChatSocket = new SockJS('http://localhost:3001/groupChat');
 
-    groupChatSocket.onopen = function() {
-      clearInterval(connectRetry);
-      $('.connect-status')
-        .removeClass('disconnected')
-        .addClass('connected')
-        .text('Connected');
-    };
+  var GroupChatClient = function(options) {
+    var server = options.server;
+    var onConnected = options.onConnected;
+    var onMessage = options.onMessage;
+    var onClose = options.onClose;
 
-    groupChatSocket.onmessage = function(e) {
-      $('#warble-msg').text(e.data);
-    };
+    var chatSocket = new SockJS('http://' + server + ':3001/groupChat');
 
-    groupChatSocket.onclose = function() {
-      clearInterval(connectRetry);
-      connectRetry = setInterval(connectToServer, 3001);
-      $('.connect-status')
-        .removeClass('connected')
-        .addClass('disconnected')
-        .text('Disconnected');
-    };
+    chatSocket.onopen = onConnected;
+    chatSocket.onmessage = onMessage;
+    chatSocket.onclose = onClose;
 
-    // Connect the text field to the socket
-    $('.msg-sender').off('input').on('input', function() {
-      groupChatSocket.send($('.msg-sender input').val()); 
-    });
-  };
+    this.sendMessage = function(message) {
+      chatSocket.send(message);
+    }
+  }
 
-  var connectRetry = setInterval(connectToServer, 3001);
+
+  window.GroupChatClient = GroupChatClient;
+
 })();
