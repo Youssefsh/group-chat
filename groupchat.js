@@ -36,6 +36,7 @@ var GroupChat = function(options) {
         var tokens = message.split(' ');
         var username = tokens[1];
         connection.username = username;
+        broadcastMessage('join: ' + username);
       } else if (message.indexOf('/message') === 0) {
         if(connection.username.length === 0) {
           connection.write('Error: Please register a username.');
@@ -43,13 +44,13 @@ var GroupChat = function(options) {
           var tokens = message.split(' ');
           var username = tokens[1];
           var msg = message.slice(message.indexOf(tokens[2]), message.length);
-          privateMessage(username, '(private)' + connection.username + ': ' + msg);
+          privateMessage(username, 'message: ' +  '(private)' + connection.username + ': ' + msg);
         }
       } else if (message.indexOf('/') !== 0) {
         if(connection.username.length === 0) {
           connection.write('Error: Please register a username.');
         } else {
-          broadcastMessage(connection.username + ': ' + message);
+          broadcastMessage('message: ' + connection.username + ': ' + message);
         }
       }
     }
@@ -60,6 +61,9 @@ var GroupChat = function(options) {
     connection.username = '';
     connections.push(connection);
     connection.on('data', messageHandler(that));
+    connection.on('close', function() {
+      broadcastMessage('leave: ' + connection.username);
+    });
   });
 
   chatserver.on('close', function() {

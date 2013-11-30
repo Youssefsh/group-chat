@@ -4,13 +4,30 @@
     var server = options.server;
     var onConnected = options.onConnected;
     var onMessage = options.onMessage;
+    var onJoin = options.onJoin;
+    var onLeave = options.onLeave;
     var onClose = options.onClose;
 
     var chatSocket = new SockJS('http://' + server + ':3001/groupChat');
 
     chatSocket.onopen = onConnected;
-    chatSocket.onmessage = onMessage;
     chatSocket.onclose = onClose;
+
+    //chatSocket.onmessage = onMessage;
+    chatSocket.onmessage = function(message) {
+      if(message.data.indexOf('message:') === 0) {
+        var msg = message.data.slice(9, message.data.length);
+        onMessage(msg);
+      } else if(message.data.indexOf('join:') === 0) {
+        var tokens = message.data.split(' ');
+        var username = tokens[1];
+        onJoin(username);
+      } else if(message.data.indexOf('leave:') === 0) {
+        var tokens = message.data.split(' ');
+        var username = tokens[1];
+        onLeave(username);
+      }
+    }
 
     this.sendMessage = function(message) {
       chatSocket.send(message);

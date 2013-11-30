@@ -3,11 +3,15 @@
 
 var express = require('express'),
     handlebars = require('hbs'),
+    stylus = require('stylus'),
     Groupchat = require('./groupchat');
     
 var app = express()
+//Use stylus middleware to compile styl files
+app.use(stylus.middleware(__dirname + '/public'));
 //Configure the static assets folder for Express
 app.use(express.static(__dirname + '/public'));
+
 //Configure the views folder for Express
 app.set('views', __dirname + '/views');
 //Set the file extension that the view engine recognizes as views

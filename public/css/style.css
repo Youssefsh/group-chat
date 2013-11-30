@@ -1,15 +1,29 @@
-body {
-  text-align: center;
+.container {
+  width: 100%;
 }
-
-h3 {
-  font-size: 2em;
+.chatarea {
+  width: 50%;
+  margin: 0 auto;
 }
-
-.disconnected {
-  color: red;
+.chatarea .messagewindow {
+  margin: 0 0 2px;
 }
-
-.connected {
-  color: green;
+.chatarea .messagewindow .incomingmessages {
+  resize: none;
+  float: left;
+  width: 70%;
+  height: 450px;
+}
+.chatarea .messagewindow .participantscontainer {
+  float: right;
+  width: 20%;
+}
+.chatarea .messagewindow .participantscontainer ul {
+  padding: 0 0 0 0;
+  list-style: none;
+}
+.chatarea .messagingwindow .outgoingmessage {
+  margin: 2px 0 0 0;
+  width: 70%;
+  height: 30px;
 }
