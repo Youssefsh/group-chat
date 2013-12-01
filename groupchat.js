@@ -5,14 +5,17 @@ var GroupChat = function(options) {
 
   var address = options.address;
   var port = options.port;
-  //var onConnect = options.onConnect;
-  //var onClose = options.onClose;
-  //var onMessage = options.onMessage
-
   var server = http.createServer();
   var chatserver = sockjs.createServer();
-
   var connections = [];
+
+  var sendParticipants = function(connection) {
+    for(var i=0; i < connections.length; i++) {
+      if(connections[i].username.length > 0)
+        console.log('Send Participants: ', connections[i].username);
+        connection.write('participant: ' + connections[i].username);
+    }
+  }
 
   var broadcastMessage = function(message) {
     for(var i=0; i < connections.length; i++) {
@@ -29,8 +32,16 @@ var GroupChat = function(options) {
     }
   }
 
-  var messageHandler = function(connection) {
+  var removeConnection = function(connection) {
+    var newconnections = [];
+    for(var i=0; i < connections.length; i++) {
+      if(connections[i] !== connection)
+        newconnections.push(connections[i]);
+    }
+    connections = newconnections;
+  }
 
+  var messageHandler = function(connection) {
     return function(message) {
       if(message.indexOf('/register') === 0) {
         var tokens = message.split(' ');
@@ -59,10 +70,12 @@ var GroupChat = function(options) {
   chatserver.on('connection', function(connection) {
     var that = connection;
     connection.username = '';
+    sendParticipants(connection);
     connections.push(connection);
     connection.on('data', messageHandler(that));
     connection.on('close', function() {
       broadcastMessage('leave: ' + connection.username);
+      removeConnection(connection);
     });
   });
 

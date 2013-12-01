@@ -11,7 +11,7 @@
   }
 
   var groupchat = new GroupChatClient({
-    'server': 'localhost',
+    'server': window.location.hostname,
     'onConnected': function() {
       console.log('Connected...\n');
       chatState.messages.push('Connected...\n');

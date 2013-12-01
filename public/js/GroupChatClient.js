@@ -26,6 +26,10 @@
         var tokens = message.data.split(' ');
         var username = tokens[1];
         onLeave(username);
+      } else if(message.data.indexOf('participant:') === 0) {
+        var tokens = message.data.split(' ');
+        var username = tokens[1];
+        console.log('Participant: ', username);
       }
     }
 
