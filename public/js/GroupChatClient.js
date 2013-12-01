@@ -7,6 +7,7 @@
     var onJoin = options.onJoin;
     var onLeave = options.onLeave;
     var onClose = options.onClose;
+    var onParticipant = options.onParticipant;
 
     var chatSocket = new SockJS('http://' + server + ':3001/groupChat');
 
@@ -29,7 +30,8 @@
       } else if(message.data.indexOf('participant:') === 0) {
         var tokens = message.data.split(' ');
         var username = tokens[1];
-        console.log('Participant: ', username);
+        //console.log('Participant: ', username);
+        onParticipant(username);
       }
     }
 

@@ -33,6 +33,10 @@
       chatState.participants.push(username);
       chatState.changed();
     },
+    'onParticipant': function(username) {
+      chatState.participants.push(username);
+      chatState.changed();
+    },
     'onLeave': function(username) {
       console.log(username + ' left chat.');
       chatState.messages.push(username + ' left chat\n');
