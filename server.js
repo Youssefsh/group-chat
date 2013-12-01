@@ -4,7 +4,7 @@
 var express = require('express'),
     handlebars = require('hbs'),
     stylus = require('stylus'),
-    Groupchat = require('./groupchat');
+    GroupChatServer = require('./groupchatserver');
     
 var app = express()
 //Use stylus middleware to compile styl files
@@ -23,7 +23,7 @@ require('./routes')(app);
 app.listen(3000);
 
 
-var groupchatserver = new Groupchat({
+var groupchatserver = new GroupChatServer({
   address: '0.0.0.0',
   port: 3001
 });
