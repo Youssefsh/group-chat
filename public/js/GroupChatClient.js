@@ -9,7 +9,7 @@
     var onClose = options.onClose;
     var onParticipant = options.onParticipant;
 
-    var chatSocket = new SockJS('http://' + server + ':3001/groupChat');
+    var chatSocket = new SockJS('http://' + server + '/groupChat');
 
     chatSocket.onopen = onConnected;
     chatSocket.onclose = onClose;

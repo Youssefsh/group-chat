@@ -3,9 +3,10 @@ var http = require('http');
 
 var GroupChat = function(options) {
 
+  var app = options.app;
   var address = options.address;
   var port = options.port;
-  var server = http.createServer();
+  var server = http.createServer(app);
   var chatserver = sockjs.createServer();
   var connections = [];
 

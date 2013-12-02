@@ -23,12 +23,13 @@ app.set('view engine', '.html.handlebars');
 app.engine('.html.handlebars', handlebars.__express);
 //Include the routes file
 require('./routes')(app);
-app.listen(3000);
+//app.listen(3000);
 
 
 var groupchatserver = new GroupChatServer({
+  app: app,
   address: '0.0.0.0',
-  port: 3001
+  port: 3000
 });
 groupchatserver.start();
 
